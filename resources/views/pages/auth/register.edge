@@ -1,0 +1,110 @@
+@layout.app({title: 'Register'})
+  <div class="min-h-screen flex items-center justify-center bg-black text-green-400 px-4">
+    <div class="text-center space-y-6 max-w-xl">
+      <h1 class="text-2xl md:text-2xl font-bold tracking-widest" style="text-shadow: 0 0 10px #0f0;">
+        ⌜ REGISTER ⌟
+      </h1>
+
+      <form action="/register" method="post" class="space-y-4">
+        {{ csrfField() }}
+        <!-- Name Input -->
+        <div>
+          <label for="name" class="block text-sm font-medium mb-2">Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            value="{{ old('name') || '' }}"
+            class="py-3 px-4 block w-full border-2 border-green-500 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+          />
+          @inputError('name')
+            <p class="text-xs text-red-600 mt-2">
+              {{ $messages }}
+            </p>
+          @end
+        </div>
+
+        <!-- Username Input -->
+        <div>
+          <label for="username" class="block text-sm font-medium mb-2">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            required
+            value="{{ old('username') || '' }}"
+            class="py-3 px-4 block w-full border-2 border-green-500 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+          />
+          @inputError('username')
+            <p class="text-xs text-red-600 mt-2">
+              {{ $messages }}
+            </p>
+          @end
+        </div>
+
+        <!-- Email Input -->
+        <div>
+          <label for="email" class="block text-sm font-medium mb-2">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            value="{{ old('email') || '' }}"
+            class="py-3 px-4 block w-full border-2 border-green-500 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+          />
+          @inputError('email')
+            <p class="text-xs text-red-600 mt-2">
+              {{ $messages }}
+            </p>
+          @end
+        </div>
+
+        <!-- Password Input -->
+        <div>
+          <label for="password" class="block text-sm font-medium mb-2">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            class="py-3 px-4 block w-full border-2 border-green-500 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+          />
+          @inputError('password')
+            <p class="text-xs text-red-600 mt-2">
+              {{ $messages }}
+            </p>
+          @end
+        </div>
+
+        <!-- Confirm Password Input -->
+        <div>
+          <label for="password_confirmation" class="block text-sm font-medium mb-2">Confirm Password</label>
+          <input
+            type="password"
+            id="password_confirmation"
+            name="password_confirmation"
+            required
+            class="py-3 px-4 block w-full border-2 border-green-500 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+          />
+        </div>
+
+        <!-- Register Button -->
+        <div>
+          <button
+            class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border-2 border-green-500 bg-green-500 text-black hover:bg-green-600 disabled:opacity-50 disabled:pointer-events-none"
+          >
+            Register
+          </button>
+        </div>
+
+      </form>
+
+      <!-- Login Link -->
+      <p class="text-sm text-green-300">
+        Already have an account? <a class="text-green-500 hover:text-green-600" href="/login">Log in</a>
+      </p>
+    </div>
+  </div>
+@end

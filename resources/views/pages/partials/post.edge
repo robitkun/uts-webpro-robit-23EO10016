@@ -1,0 +1,71 @@
+<div
+  class="p-5 bg-black border border-green-500 shadow-inner shadow-green-500/30 rounded-xl text-green-300 font-mono"
+>
+  <div class="flex items-center justify-between">
+    <a class="flex items-center space-x-2" href="{{ `/${post.user.username}` }}">
+      <div class="font-bold text-green-300">
+        {{ post.user.name }}
+      </div>
+      <span class="text-green-500 text-xs">{{ post.user.handle }}</span>
+    </a>
+
+    @if(auth.isAuthenticated && post.user.id === auth.user.id)
+      <div class="flex items-center space-x-3">
+        <a class="text-yellow-400 text-xs hover:text-yellow-300" href="{{ `/posts/${post.id}/edit` }}">
+          [Edit]
+      </a>
+
+        <form action="{{ `/posts/${post.id}?_method=DELETE` }}" method="post">
+          {{ csrfField() }}
+        <button class="text-red-400 text-xs hover:text-red-300">[Delete]</button>
+        </form>
+      </div>
+    @end
+  </div>
+
+  <p class="mt-4 text-green-200 whitespace-pre-line">
+    {{ post.content }}
+  </p>
+
+  <div class="mt-4 flex items-center justify-between text-xs text-green-400">
+    @if(auth.isAuthenticated)
+      @if(await auth.user.hasLikedPost(post.id))
+        <form action="{{ `/posts/${post.id}/likes?_method=DELETE` }}" method="post">
+          {{ csrfField() }}
+      <button class="flex items-center space-x-1 hover:text-yellow-400">
+            <span>♥</span>
+            <span>{{ post.$extras.likes_count }}</span>
+          </button>
+        </form>
+      @else
+        <form action="{{ `/posts/${post.id}/likes` }}" method="post">
+          {{ csrfField() }}
+      <button class="flex items-center space-x-1 hover:text-yellow-400">
+            <span>♡</span>
+            <span>{{ post.$extras.likes_count }}</span>
+          </button>
+        </form>
+      @end
+    @else
+      <div class="flex items-center space-x-1">
+        <span>♡</span>
+        <span>{{ post.$extras.likes_count }}</span>
+      </div>
+    @end
+    
+    <div class="flex items-center space-x-2">
+      @if(post.createdAt.equals(post.updatedAt))
+        <div>
+          {{ post.createdAt.toRelative() }}
+        </div>
+      @else
+        <div>
+          [edited]
+        </div>
+        <div>
+          {{ post.updatedAt.toRelative() }}
+        </div>
+      @end
+    </div>
+  </div>
+</div>

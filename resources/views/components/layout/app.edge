@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <title>
+      {{ title }}
+    </title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+    <style>
+      body {
+        font-family: 'Press Start 2P', monospace;
+        background-color: #000;
+        color: #0f0;
+        text-shadow: 0 0 5px #0f0;
+      }
+      
+      a,
+      button {
+        transition: all 0.2s ease-in-out;
+      }
+      
+      a:hover,
+      button:hover {
+        color: #ff0;
+        text-shadow: 0 0 8px #ff0;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex flex-col">
+
+    <header class="bg-black py-4 border-b border-green-500 shadow shadow-green-400/40">
+      <nav class="max-w-7xl mx-auto px-4 flex justify-between items-center">
+        <a class="text-green-400 text-xl hover:text-green-300" href="/">⌜ FEED ROBIT ⌟</a>
+
+        <div class="flex items-center space-x-4">
+          @eval(await auth.check())
+
+          @if(auth.isAuthenticated)
+            <a href="/feed" class="text-green-400 hover:text-yellow-300">FEED</a>
+            <span class="text-green-300">{{ auth.user.name }}</span>
+
+            <form action="/logout?_method=DELETE" method="post">
+              {{ csrfField() }}
+              <button class="text-green-400 hover:text-yellow-300">Log out</button>
+            </form>
+          @else
+            <a href="/login" class="text-green-400 hover:text-yellow-300">Log in</a>
+            <a href="/register" class="text-green-400 hover:text-yellow-300">Register</a>
+          @end
+        </div>
+      </nav>
+    </header>
+
+    <main class="flex-grow">
+      {{{ await $slots.main() }}}
+    </main>
+
+    <footer class="text-center text-green-600 text-xs py-4">
+      &copy; 2025 FEED Robit. Powering nostalgia with code ⚡
+    </footer>
+  </body>
+</html>
